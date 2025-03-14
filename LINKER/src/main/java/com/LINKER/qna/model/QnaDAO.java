@@ -1,13 +1,13 @@
-package com.LINKER.orderProduct.model;
+package com.LINKER.qna.model;
 
-public class OrderProductDAO {
+public class QnaDAO {
 
-	private static OrderProductDAO instance = new OrderProductDAO();
+	private static QnaDAO instance = new QnaDAO();
 	
-	private OrderProductDAO() {
+	private QnaDAO() {
 	}
 	
-	public static OrderProductDAO getInstacne() {
+	public static QnaDAO getInstance() {
 		return instance;
 	}
 	
@@ -15,5 +15,4 @@ public class OrderProductDAO {
 	private String url = "jdbc:oracle:thin:@172.30.1.58:1521:xe";
 	private String uid = "LINKER";
 	private String upw = "LINKER";
-	
 }
