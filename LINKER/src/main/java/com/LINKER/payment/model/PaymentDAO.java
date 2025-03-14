@@ -1,13 +1,13 @@
-package com.LINKER.orderProduct.model;
+package com.LINKER.payment.model;
 
-public class OrderProductDAO {
+public class PaymentDAO {
 
-	private static OrderProductDAO instance = new OrderProductDAO();
+	private static PaymentDAO instance = new PaymentDAO();
 	
-	private OrderProductDAO() {
+	private PaymentDAO() {
 	}
 	
-	public static OrderProductDAO getInstacne() {
+	public static PaymentDAO getInstance() {
 		return instance;
 	}
 	
@@ -15,5 +15,4 @@ public class OrderProductDAO {
 	private String url = "jdbc:oracle:thin:@172.30.1.58:1521:xe";
 	private String uid = "LINKER";
 	private String upw = "LINKER";
-	
 }

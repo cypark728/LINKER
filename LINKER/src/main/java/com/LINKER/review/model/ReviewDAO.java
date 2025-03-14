@@ -1,13 +1,13 @@
-package com.LINKER.orderProduct.model;
+package com.LINKER.review.model;
 
-public class OrderProductDAO {
+public class ReviewDAO {
 
-	private static OrderProductDAO instance = new OrderProductDAO();
+	private static ReviewDAO instance = new ReviewDAO();
 	
-	private OrderProductDAO() {
+	private ReviewDAO() {
 	}
 	
-	public static OrderProductDAO getInstacne() {
+	public static ReviewDAO getInstance() {
 		return instance;
 	}
 	
@@ -15,5 +15,7 @@ public class OrderProductDAO {
 	private String url = "jdbc:oracle:thin:@172.30.1.58:1521:xe";
 	private String uid = "LINKER";
 	private String upw = "LINKER";
+	
+	//리뷰 만들기
 	
 }
