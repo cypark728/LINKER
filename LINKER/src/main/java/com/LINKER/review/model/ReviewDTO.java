@@ -21,37 +21,47 @@ public class ReviewDTO {
 		this.reviewCreatedAt = reviewCreatedAt;
 		this.userId = userId;
 	}
-	
+
 	public int getReviewId() {
 		return reviewId;
 	}
+
 	public void setReviewId(int reviewId) {
 		this.reviewId = reviewId;
 	}
+
 	public int getProductDetailId() {
 		return productDetailId;
 	}
+
 	public void setProductDetailId(int productDetailId) {
 		this.productDetailId = productDetailId;
 	}
+
 	public String getReviewContent() {
 		return reviewContent;
 	}
+
 	public void setReviewContent(String reviewContent) {
 		this.reviewContent = reviewContent;
 	}
+
 	public Timestamp getReviewCreatedAt() {
 		return reviewCreatedAt;
 	}
+
 	public void setReviewCreatedAt(Timestamp reviewCreatedAt) {
 		this.reviewCreatedAt = reviewCreatedAt;
 	}
+
 	public int getUserId() {
 		return userId;
 	}
+
 	public void setUserId(int userId) {
 		this.userId = userId;
 	}
+	
 	
 	
 }

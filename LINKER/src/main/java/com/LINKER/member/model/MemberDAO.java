@@ -134,7 +134,7 @@ public class MemberDAO {
 				if(conn != null) conn.close();
 				if(pstmt != null) pstmt.close();
 				if(rs != null) rs.close();
-			} catch (Exception e2) {
+			} catch (Exception e2) { 
 			}
 		}
 		
