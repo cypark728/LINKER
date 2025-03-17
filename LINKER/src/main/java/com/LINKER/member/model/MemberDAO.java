@@ -5,6 +5,8 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Timestamp;
+import java.util.ArrayList;
+import java.util.List;
 
 public class MemberDAO {
 	private static MemberDAO instance = new MemberDAO();
@@ -142,21 +144,23 @@ public class MemberDAO {
 	}
 	
 	//회원 정보 수정
-	public int modify(String email, String name, String phone) {
+	public int modify(MemberDTO dto) {
 		int result = 0;
 		Connection conn = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 		
-		String sql = "UPDATE MEMBER SET USER_NAME = ?, PHONE = ? WHERE EMAIL = ?";
+		String sql = "UPDATE MEMBER SET USER_NAME = ?, PASSWORD = ?, PHONE = ? "
+				+ "WHERE EMAIL = ?";
 		
 		try {
 			Class.forName("oracle.jdbc.driver.OracleDriver");
 			conn = DriverManager.getConnection(url, uid, upw);
 			pstmt = conn.prepareStatement(sql);
-			pstmt.setString(1, name);
-			pstmt.setString(2, phone);
-			pstmt.setString(3, email);
+			pstmt.setString(1, dto.getUserName());
+			pstmt.setString(2, dto.getPassword());
+			pstmt.setString(3, dto.getPhone());
+			pstmt.setString(4, dto.getEmail());
 			
 			result = pstmt.executeUpdate(); //성공시 1반환, 실패시 0
 		} catch (Exception e) {
@@ -202,5 +206,53 @@ public class MemberDAO {
 		}
 		return result;
 	}
+	
+	//모든 회원 목록 보기
+	public List<MemberDTO> getMemberList() {
+		//반환용 리스트
+        List<MemberDTO> memberList = new ArrayList<>();
+        
+        Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+        
+        String sql = "SELECT USER_ID, USER_NAME, EMAIL, PASSWORD, PHONE,"+ 
+        			"CREATED_AT, MEM_CODE, CART_ID " +
+                     "FROM MEMBER";
+
+        try {
+        	Class.forName("oracle.jdbc.driver.OracleDriver");
+			conn = DriverManager.getConnection(url, uid, upw);
+			pstmt = conn.prepareStatement(sql);
+			
+			rs = pstmt.executeQuery();
+			
+			
+			while (rs.next()) {
+                MemberDTO dto = new MemberDTO();
+                dto.setUserId(rs.getInt("user_id"));
+                dto.setUserName(rs.getString("user_name"));
+                dto.setEmail(rs.getString("email"));
+                dto.setPassword(rs.getString("password"));
+                dto.setPhone(rs.getString("phone"));
+                dto.setCreatedAt(rs.getTimestamp("created_at"));
+                dto.setMemCode(rs.getString("mem_code"));
+                dto.setCartId(rs.getInt("cart_id"));
+                
+                memberList.add(dto); 
+            }
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				if(conn != null) conn.close();
+				if(pstmt != null) pstmt.close();
+				if(rs != null) rs.close();
+			} catch (Exception e2) {
+			}
+		}
+
+        return memberList;
+    }
 	
 }

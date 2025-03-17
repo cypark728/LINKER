@@ -107,6 +107,104 @@ public class ProductDetailDAO {
         return productDetailList;
     }
 	
+	
+	//제품 상세 목록 (작가 아이디 받아서, 그 작가의 제품 상세 목록만 반환)
+	public List<ProductDetailDTO> getProductDetailByUserID(int userId) {
+		//반환용 리스트
+        List<ProductDetailDTO> productDetailList = new ArrayList<>();
+        
+        Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+        
+        String sql = "SELECT PRODUCT_DETAIL_ID, PRODUCT_IMAGE, PRODUCT_DESCRIPTION, PRODUCT_CONTACT_INFO," +
+        			 "PRODUCT_CREATED_AT, PRODUCT_PRICE, PRODUCT_TYPE, USER_ID " +
+                     "FROM PRODUCT_DETAIL WHERE USER_ID = ? ORDER BY PRODUCT_CREATED_AT DESC";
+
+        try {
+        	Class.forName("oracle.jdbc.driver.OracleDriver");
+			conn = DriverManager.getConnection(url, uid, upw);
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, userId);
+			
+			rs = pstmt.executeQuery();
+			
+			while (rs.next()) {
+				ProductDetailDTO dto = new ProductDetailDTO();
+                dto.setProductDetailId(rs.getInt("product_detail_id"));
+                dto.setProductImage(rs.getBytes("product_image"));
+                dto.setProductDescription(rs.getString("product_description"));
+                dto.setProductContactInfo(rs.getString("product_contact_info"));
+                dto.setProductCreatedAt(rs.getTimestamp("product_created_at"));
+                dto.setProductPrice(rs.getInt("product_price"));
+                dto.setProductType(rs.getString("product_type"));
+                dto.setUserID(rs.getInt("user_id"));
+                productDetailList.add(dto); 
+            }
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				if(conn != null) conn.close();
+				if(pstmt != null) pstmt.close();
+				if(rs != null) rs.close();
+			} catch (Exception e2) {
+			}
+		}
+
+        return productDetailList;
+    }
+	
+	
+	//제품 목록 반환(제품 유형 입력 받아서, 해당 유형의 제품 상세 목록만을 반환)
+	public List<ProductDetailDTO> getProductDetailByProductType(String productType) {
+		//반환용 리스트
+        List<ProductDetailDTO> productDetailList = new ArrayList<>();
+        
+        Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+        
+        String sql = "SELECT PRODUCT_DETAIL_ID, PRODUCT_IMAGE, PRODUCT_DESCRIPTION, PRODUCT_CONTACT_INFO," +
+        			 "PRODUCT_CREATED_AT, PRODUCT_PRICE, PRODUCT_TYPE, USER_ID " +
+                     "FROM PRODUCT_DETAIL WHERE PRODUCT_TYPE = ? ORDER BY PRODUCT_CREATED_AT DESC";
+
+        try {
+        	Class.forName("oracle.jdbc.driver.OracleDriver");
+			conn = DriverManager.getConnection(url, uid, upw);
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, productType);
+			
+			rs = pstmt.executeQuery();
+			
+			while (rs.next()) {
+				ProductDetailDTO dto = new ProductDetailDTO();
+                dto.setProductDetailId(rs.getInt("product_detail_id"));
+                dto.setProductImage(rs.getBytes("product_image"));
+                dto.setProductDescription(rs.getString("product_description"));
+                dto.setProductContactInfo(rs.getString("product_contact_info"));
+                dto.setProductCreatedAt(rs.getTimestamp("product_created_at"));
+                dto.setProductPrice(rs.getInt("product_price"));
+                dto.setProductType(rs.getString("product_type"));
+                dto.setUserID(rs.getInt("user_id"));
+                productDetailList.add(dto); 
+            }
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				if(conn != null) conn.close();
+				if(pstmt != null) pstmt.close();
+				if(rs != null) rs.close();
+			} catch (Exception e2) {
+			}
+		}
+
+        return productDetailList;
+    }
+	
+	
+	
 	//제품 상세 내용 (제품 아이디 받아서 한개만)
 	public ProductDetailDTO getProductDetailByID(int productDetailId) {
 		
