@@ -29,7 +29,7 @@ public class OrderDetailDAO {
 			PreparedStatement pstmt = null;
 			ResultSet rs = null;
 			
-			String sql = "INSERT INTO ORDER_DETAIL(ORDER_ID, PRODUCT_ID, PRODUCT_CNT) "
+			String sql = "INSERT INTO ORDER_DETAIL(ORDER_ID, PRODUCT_DETAIL_ID, PRODUCT_CNT) "
 					+ "VALUES(?, ?, ?)";
 			
 			
@@ -65,7 +65,7 @@ public class OrderDetailDAO {
 			ResultSet rs = null;
 			
 			String sql = "SELECT ORDER_ID, PRODUCT_DETAIL_ID, PRODUCT_CNT "
-					+ "FROM ORDER_DETAIL WEHRE ORDER_ID = ?";
+					+ "FROM ORDER_DETAIL WHERE ORDER_ID = ?";
 
 			try {
 				Class.forName("oracle.jdbc.driver.OracleDriver");

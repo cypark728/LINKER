@@ -34,6 +34,9 @@ public class CartDAO {
 		String sql = "INSERT INTO CART (CART_ID, BUYER_ID, QUANTITY, PRODUCT_DETAIL_ID) "
 				+ "VALUES(cart_seq.NEXTVAL, ?, ?, ?)" ;
 		
+		String sql2 = "UPDATE MEMBER SET CART_ID "
+				+ "WHERE USER_ID = ?";
+		
 		try {
 			Class.forName("oracle.jdbc.driver.OracleDriver");
 			conn = DriverManager.getConnection(url, uid, upw);
@@ -41,6 +44,11 @@ public class CartDAO {
 			pstmt.setInt(1, dto.buyerID);
 			pstmt.setInt(2, dto.quantity);
 			pstmt.setInt(3, dto.productDetailID);
+			
+			pstmt.executeUpdate();
+			
+			pstmt = conn.prepareStatement(sql2);
+			pstmt.setInt(1, dto.buyerID);
 			
 			pstmt.executeUpdate();
 			

@@ -31,9 +31,9 @@ public class ProductDetailDAO {
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 		
-		String sql = "INSERT INTO PRODUCT_DETAIL (PRODUCT_DETAIL_ID, PRODUCT_IMAGE, PRODUCT_DESCRIPTION,"
-				+ "PRODUCT_CONTACT_INFO, PRODUCT_PRICE, PRODUCT_TYPE, USER_ID) "
-				+ "VALUES(product_detail_seq.NEXTVAL, ?, ?, ?)";
+		String sql = "INSERT INTO PRODUCT_DETAIL (PRODUCT_DETAIL_ID, PRODUCT_IMAGE, PRODUCT_DESCRIPTION, "
+                + "PRODUCT_CONTACT_INFO, PRODUCT_PRICE, PRODUCT_TYPE, USER_ID) "
+                + "VALUES (product_detail_seq.NEXTVAL, ?, ?, ?, ?, ?, ?)";
 		
 		try {
 			Class.forName("oracle.jdbc.driver.OracleDriver");
@@ -217,7 +217,7 @@ public class ProductDetailDAO {
 		
 		String sql = "SELECT PRODUCT_DETAIL_ID, PRODUCT_IMAGE, PRODUCT_DESCRIPTION, PRODUCT_CONTACT_INFO," +
    			 	"PRODUCT_CREATED_AT, PRODUCT_PRICE, PRODUCT_TYPE, USER_ID " +
-                "FROM PRODUCT_DETAIL WEHRE PRODUCT_DETAIL_ID = ? ORDER BY PRODUCT_CREATED_AT DESC";
+                "FROM PRODUCT_DETAIL WHERE PRODUCT_DETAIL_ID = ? ORDER BY PRODUCT_CREATED_AT DESC";
 
 		try {
 			Class.forName("oracle.jdbc.driver.OracleDriver");

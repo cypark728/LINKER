@@ -15,7 +15,7 @@
         if(result == 1){
         	out.println("중복되는 이메일입니다. 다시 입력 바랍니다.");
         }else {
-        MemberDTO newMember = new MemberDTO(0, userName, email, password, phone, createdAt, memCode, 0);
+        MemberDTO newMember = new MemberDTO(0, userName, email, password, phone, createdAt, memCode, 0, 1000000);
         MemberDAO.getInstance().join(newMember);
 
         out.println("회원가입 성공!");

@@ -14,7 +14,7 @@ public class OrderProductDAO {
 	private OrderProductDAO() {
 	}
 	
-	public static OrderProductDAO getInstacne() {
+	public static OrderProductDAO getInstance() {
 		return instance;
 	}
 	
@@ -31,7 +31,7 @@ public class OrderProductDAO {
 		ResultSet rs = null;
 		
 		String sql = "INSERT INTO ORDER_PRODUCT(ORDER_ID, SELECTED_OPTIONS, USER_ID) "
-				+ "VALUES(order_product_seq, ?, ?)";
+				+ "VALUES(order_product_seq.NEXTVAL, ?, ?)";
 		
 		try {
 			Class.forName("oracle.jdbc.driver.OracleDriver");
@@ -39,6 +39,8 @@ public class OrderProductDAO {
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setString(1, dto.getSelectedOptions());
 			pstmt.setInt(2, dto.getUserId());
+			
+			pstmt.executeUpdate();
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
@@ -76,7 +78,7 @@ public class OrderProductDAO {
 			while (rs.next()) {
 				OrderProductDTO dto = new OrderProductDTO();
 				dto.setOrderId(rs.getInt("order_id"));
-				dto.setSelectedOptions(rs.getString("selected_optios"));
+				dto.setSelectedOptions(rs.getString("selected_options"));
 				dto.setOrderDate(rs.getTimestamp("order_date"));
                 dto.setUserId(rs.getInt("user_id"));
                 dto.setOrderProductStatus(rs.getString("order_product_status"));
@@ -137,7 +139,7 @@ public class OrderProductDAO {
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 		
-		String sql = "UPDATE PRODUCT_DETAIL SET ORDER_PRODUCT_STATUS = ? "
+		String sql = "UPDATE ORDER_PRODUCT SET ORDER_PRODUCT_STATUS = ? "
 				+ "WHERE ORDER_ID = ?";
 		
 		try {
