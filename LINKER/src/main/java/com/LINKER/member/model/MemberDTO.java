@@ -11,12 +11,13 @@ public class MemberDTO {
 	private Timestamp createdAt;
 	private String memCode;
 	private int cartId;
+	private int userPoint;
 	
 	public MemberDTO() {
 	}
 
 	public MemberDTO(int userId, String userName, String email, String password, String phone, Timestamp createdAt,
-			String memCode, int cartId) {
+			String memCode, int cartId, int userPoint) {
 		super();
 		this.userId = userId;
 		this.userName = userName;
@@ -26,6 +27,7 @@ public class MemberDTO {
 		this.createdAt = createdAt;
 		this.memCode = memCode;
 		this.cartId = cartId;
+		this.userPoint = userPoint;
 	}
 
 	public int getUserId() {
@@ -91,6 +93,16 @@ public class MemberDTO {
 	public void setCartId(int cartId) {
 		this.cartId = cartId;
 	}
+
+	public int getUserPoint() {
+		return userPoint;
+	}
+
+	public void setUserPoint(int userPoint) {
+		this.userPoint = userPoint;
+	}
+
+	
 	
 	
 	

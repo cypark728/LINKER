@@ -61,7 +61,7 @@ public class OrderProductDAO {
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
         
-        String sql = "SELECT ORDER_ID, SELECTED_OPTIONS, ORDER_DATE, USER_ID " +
+        String sql = "SELECT ORDER_ID, SELECTED_OPTIONS, ORDER_DATE, USER_ID, ORDER_PRODUCT_STATUS " +
                      "FROM ORDER_PRODUCT WHERE USER_ID = ? ORDER BY ORDER_DATE DESC";
 
         try {
@@ -79,6 +79,7 @@ public class OrderProductDAO {
 				dto.setSelectedOptions(rs.getString("selected_optios"));
 				dto.setOrderDate(rs.getTimestamp("order_date"));
                 dto.setUserId(rs.getInt("user_id"));
+                dto.setOrderProductStatus(rs.getString("order_product_status"));
                 orderList.add(dto); 
             }
 		} catch (Exception e) {
@@ -124,6 +125,39 @@ public class OrderProductDAO {
 			}
 		}
 		
+		return result;
+	}
+	
+	
+	//주문 상태 업데이트
+	public int updateOrderProductStatus(int orderId, String orderProductStatus) {
+		
+		int result = 0;
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		
+		String sql = "UPDATE PRODUCT_DETAIL SET ORDER_PRODUCT_STATUS = ? "
+				+ "WHERE ORDER_ID = ?";
+		
+		try {
+			Class.forName("oracle.jdbc.driver.OracleDriver");
+			conn = DriverManager.getConnection(url, uid, upw);
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, orderProductStatus);
+			pstmt.setInt(2, orderId);
+			
+			result = pstmt.executeUpdate(); //성공시 1반환, 실패시 0
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				if(conn != null) conn.close();
+				if(pstmt != null) pstmt.close();
+				if(rs != null) rs.close();
+			} catch (Exception e2) {
+			}
+		}
 		return result;
 	}
 	

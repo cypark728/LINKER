@@ -30,8 +30,8 @@ public class ReviewDAO {
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 		
-		String sql = "INSERT INTO REVIEW (REVIEW_ID, PRODUCT_DETAIL_ID, REVIEW_CONTENT, USER_ID) "
-				+ "VALUES(review_seq.NEXTVAL, ?, ?, ?)";
+		String sql = "INSERT INTO REVIEW (REVIEW_ID, PRODUCT_DETAIL_ID, REVIEW_CONTENT, USER_ID, REVIEW_RATING) "
+				+ "VALUES(review_seq.NEXTVAL, ?, ?, ?, ?)";
 		
 		try {
 			Class.forName("oracle.jdbc.driver.OracleDriver");
@@ -40,6 +40,7 @@ public class ReviewDAO {
 			pstmt.setInt(1, dto.productDetailId);
 			pstmt.setString(2, dto.reviewContent);
 			pstmt.setInt(3, dto.userId);
+			pstmt.setInt(4, dto.reviewRating);
 			
 			pstmt.executeUpdate();
 		} catch (Exception e) {
@@ -63,7 +64,7 @@ public class ReviewDAO {
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
         
-        String sql = "SELECT REVIEW_ID, PRODUCT_DETAIL_ID, REVIEW_CONTENT, USER_ID, REVIEW_CREATED_AT " +
+        String sql = "SELECT REVIEW_ID, PRODUCT_DETAIL_ID, REVIEW_CONTENT, USER_ID, REVIEW_CREATED_AT, REVIEW_RATING " +
                      "FROM REVIEW WHERE PRODUCT_DETAIL_ID = ? ORDER BY REVIEW_CREATED_AT DESC";
 
         try {
@@ -82,6 +83,7 @@ public class ReviewDAO {
                 dto.setReviewContent(rs.getString("review_content"));
                 dto.setUserId(rs.getInt("user_id"));
                 dto.setReviewCreatedAt(rs.getTimestamp("review_created_at"));
+                dto.setReviewRating(rs.getInt("review_rating"));
                 reviewList.add(dto); 
             }
 		} catch (Exception e) {
@@ -108,7 +110,7 @@ public class ReviewDAO {
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
         
-        String sql = "SELECT REVIEW_ID, PRODUCT_DETAIL_ID, REVIEW_CONTENT, USER_ID, REVIEW_CREATED_AT " +
+        String sql = "SELECT REVIEW_ID, PRODUCT_DETAIL_ID, REVIEW_CONTENT, USER_ID, REVIEW_CREATED_AT, REVIEW_RATING " +
                      "FROM REVIEW WHERE USER_ID = ? ORDER BY REVIEW_CREATED_AT DESC";
 
         try {
@@ -127,6 +129,7 @@ public class ReviewDAO {
                 dto.setReviewContent(rs.getString("review_content"));
                 dto.setUserId(rs.getInt("user_id"));
                 dto.setReviewCreatedAt(rs.getTimestamp("review_created_at"));
+                dto.setReviewRating(rs.getInt("review_rating"));
                 reviewList.add(dto); 
             }
 		} catch (Exception e) {
@@ -142,5 +145,47 @@ public class ReviewDAO {
 
         return reviewList;
     }
+	
+	//한 상품에 대한 전체 리뷰 평균 반환
+	public float getReviewRatingAvg(int productDetailId) {
+		float result = 0;
+
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		
+		String sql = "SELECT AVG(REVIEW_RATING) AS avg_rating "
+				+ "FROM REVIEW "
+				+ "WHERE PRODUCT_DETAIL_ID = ? "
+				+ "GROUP_BY PRODUCT_DETAIL_ID";
+		
+		try {
+			Class.forName("oracle.jdbc.driver.OracleDriver");
+			conn = DriverManager.getConnection(url, uid, upw);
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, productDetailId);
+			
+			rs = pstmt.executeQuery();
+			
+			if (rs.next()) {
+	            result = rs.getFloat("avg_rating");
+	            if (rs.wasNull()) {  // NULL 체크
+	                result = 0.0f;
+	            }
+	        }
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				if(conn != null) conn.close();
+				if(pstmt != null) pstmt.close();
+				if(rs != null) rs.close();
+			} catch (Exception e2) {
+			}
+		}
+		
+		return result;
+	}
 	
 }

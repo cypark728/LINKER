@@ -51,8 +51,9 @@ public class MemberDAO {
 				Timestamp createdAt = rs.getTimestamp("created_at");
 				String memCode = rs.getString("mem_code");
 				int cartId = rs.getInt("cart_id");
+				int userPoint = rs.getInt("user_point");
 				
-				dto = new MemberDTO(userId, userName, userEmail, password, phone, createdAt, memCode, cartId);
+				dto = new MemberDTO(userId, userName, userEmail, password, phone, createdAt, memCode, cartId, userPoint);
 			}
 			
 		} catch (Exception e) {
@@ -217,7 +218,7 @@ public class MemberDAO {
 		ResultSet rs = null;
         
         String sql = "SELECT USER_ID, USER_NAME, EMAIL, PASSWORD, PHONE,"+ 
-        			"CREATED_AT, MEM_CODE, CART_ID " +
+        			"CREATED_AT, MEM_CODE, CART_ID, USER_POINT " +
                      "FROM MEMBER";
 
         try {
@@ -254,5 +255,64 @@ public class MemberDAO {
 
         return memberList;
     }
+	
+	//포인트 차감, 추가 (구매자ID, 판매자ID, 가격 받아서 포인트에 적용)
+	public int transferPoint(int buyerId, int sellerId, int price) {
+		int result = 0;
+		
+		Connection conn = null;
+		PreparedStatement deductStmt = null;
+        PreparedStatement addStmt = null;
+		
+		String deductPointsSql = "UPDATE MEMBER SET user_point = user_point - ? "
+				+ "WHERE user_id = ? AND user_point >= ?";
+        String addPointsSql = "UPDATE MEMBER SET user_point = user_point + ? "
+        		+ "WHERE user_id = ?";
+		
+		try {
+			Class.forName("oracle.jdbc.driver.OracleDriver");
+			conn = DriverManager.getConnection(url, uid, upw);
+			conn.setAutoCommit(false); // 트랜잭션 시작
+			
+			// 포인트 차감
+            deductStmt = conn.prepareStatement(deductPointsSql);
+            deductStmt.setInt(1, price);
+            deductStmt.setInt(2, buyerId);
+            deductStmt.setInt(3, price);
+            int deductRows = deductStmt.executeUpdate();
+            
+            if (deductRows == 0) {
+                conn.rollback(); // 포인트 부족하면 롤백
+                return result;
+            }
+
+            // 포인트 추가
+            addStmt = conn.prepareStatement(addPointsSql);
+            addStmt.setInt(1, price);
+            addStmt.setInt(2, sellerId);
+            int addRows = addStmt.executeUpdate();
+            
+            if (addRows == 0) {
+                conn.rollback(); // 받는 유저가 없으면 롤백
+                return result;
+            }
+            
+            conn.commit(); // 정상 처리 시 커밋
+            result = 1;
+            return result; //결제 성공시 1, 실패시 0 반환
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+            try {
+                if (deductStmt != null) deductStmt.close();
+                if (addStmt != null) addStmt.close();
+                conn.setAutoCommit(true);
+            } catch (Exception e2) {
+            }
+        }
+		
+		return result;
+	}
 	
 }
