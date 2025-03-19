@@ -65,7 +65,7 @@
             newProduct.setProductContactInfo(request.getParameter("contact"));
             newProduct.setProductPrice(Integer.parseInt(request.getParameter("price")));
             newProduct.setProductType(request.getParameter("type"));
-            newProduct.setUserID(1); // user_id는 1로 고정
+            newProduct.setUserID(10); // user_id는 10로 고정
             
             dao.writeProductDetail(newProduct);
             out.println("<p>제품이 성공적으로 추가되었습니다!</p>");
