@@ -7,6 +7,9 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.LINKER.qna.service.QnaService;
+import com.LINKER.qna.service.QnaServiceImpl;
+
 
 @WebServlet("*.IntegratedWriting")
 public class IntegratedWritingController extends HttpServlet {
@@ -34,6 +37,17 @@ public class IntegratedWritingController extends HttpServlet {
 		String command = uri.substring( conPath.length() );
 		
 		System.out.println("요청경로: " + command);
+		
+		QnaService service = new QnaServiceImpl();
+		
+		if(command.equals("/qna.IntegratedWriting")) {
+			request.getRequestDispatcher("main.jsp").forward(request, response);
+		} else if(command.equals("/registerQna.IntegratedWriting")) { //QnA 글쓰기
+			service.writeQna(request, response);
+			
+		} else if(command.equals("/registerProduct.IntegratedWriting")) { //제품상세 글쓰기
+			
+		}
 		
 	}
 

@@ -64,6 +64,8 @@ document.addEventListener('DOMContentLoaded', function () {
     registerButton.addEventListener('click', function () {
         var titleInput = document.getElementById('title-input').value.trim();
         var contentInput = document.getElementById('content-input').value.trim();
+		var productCheckbox = document.getElementById("product-register");
+		var inquiryCheckbox = document.getElementById("inquiry");
 
         // 제목이 비어 있으면 알림
         if (!titleInput) {
@@ -73,8 +75,67 @@ document.addEventListener('DOMContentLoaded', function () {
         else if (!contentInput) {
             alert("내용을 작성해주세요");
         }
+		// checkbox가 체크 확인
+		else if(!productCheckbox.checked && !inquiryCheckbox.checked) {
+			alert("상품등록 혹은 1:1문의 중 하나를 선택해주세요");
+		}
         // 제목과 내용이 모두 입력되었으면 등록 메시지
         else {
+			// 상품등록 체크되었을 경우
+			if(productCheckbox.checked){
+				// 동적으로 폼 생성
+		        var form = document.createElement("form");
+		        form.method = "POST";
+		        form.action = "registerProduct.IntegratedWriting"; // 서블릿 주소
+		        form.enctype = "multipart/form-data"; // 파일 업로드 가능하도록 설정
+				
+				// 카테고리 추가
+		        var categorySelect = document.createElement("input");
+		        categorySelect.name = "category";
+		        categorySelect.value = document.getElementById("category-select").value;
+		        form.appendChild(categorySelect);
+			   
+				// 파일 추가
+		        var fileInput = document.getElementById("file-input");
+		        if (fileInput.files.length > 0) {
+		            var file = fileInput.files[0];
+
+		            // FormData 객체 사용
+		            var formData = new FormData();
+		            formData.append("file", file);
+
+		            // 폼 데이터를 form에 추가
+		            for (var [key, value] of formData.entries()) {
+		                var fileHiddenInput = document.createElement("input");
+		                fileHiddenInput.name = key;
+		                fileHiddenInput.value = value;
+		                form.appendChild(fileHiddenInput);
+		            }
+		        }
+			} else {
+				// 동적으로 폼 생성
+		        var form = document.createElement("form");
+		        form.method = "POST";
+		        form.action = "registerQna.IntegratedWriting"; // 서블릿 주소
+			}
+			// 제목 추가
+		    var titleInput = document.createElement("input");
+		    titleInput.name = "title";
+		    titleInput.value = document.getElementById("title-input").value;
+		    form.appendChild(titleInput);
+			
+			// 내용 추가
+	        var contentInput = document.createElement("input");
+	        contentInput.name = "content";
+	        contentInput.value = document.getElementById("content-input").value;
+	        form.appendChild(contentInput);
+			
+			// 동적으로 생성한 폼을 body에 추가 후 제출
+	        document.body.appendChild(form);
+	        form.submit();
+			
+			//form에 세션에 저장되어있는(현재 로그인 중인) userid도 같이 전달해야 겠는데?
+			
             alert("작성한 글이 등록되었습니다");
         }
     });
