@@ -48,6 +48,7 @@ document.addEventListener('DOMContentLoaded', function () {
         }
         // 제목과 내용이 모두 입력되었으면 등록 메시지
         else {
+			//여기서 컨트롤로 넘어가야 겠네..?
             alert("작성한 글이 등록되었습니다");
         }
     });

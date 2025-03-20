@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- namespace에는 구현인터페이스의 풀패키지명을 포함한 이름 -->
+<mapper namespace="com.LINKER.qna.model.QnaMapper">
+	
+	<!-- 
+		id는 인터페이스의 함수명 
+		세미콜론은 적지 않습니다. 	
+		
+		select는 resultType에 반환받을 타입을 *반드시* 적어야 합니다.
+		타입의 종류 - string, int, double, array, dto등이 있습니다.
+	-->
+	
+	<!-- 
+		파라미터 값이 있으면, 이 파라미터에 대한 타입을 지정(반드시 필수 x)
+		
+		?는 #{}로 바뀝니다.
+		파라미터의 이름은 getter명을 따라갑니다.
+	-->
+	<insert id="writeProductDetail" parameterType="com.LINKER.productDetail.model.ProductDetailDTO">
+		INSERT INTO PRODUCT_DETAIL (PRODUCT_DETAIL_ID, PRODUCT_IMAGE, PRODUCT_DESCRIPTION, PRODUCT_PRICE, PRODUCT_TYPE, USER_ID, PRODUCT STATUS) 
+		VALUES(product_detail_seq.NEXTVAL, #{productImage}, #{productDescription}, #{productPrice}, #{productType}, #{userId}, #{productStatus})
+	</insert>
+	
+	<insert id="writeQna" parameterType="QnaDTO">
+		INSERT INTO QNA (QNA_ID, QNA_TITLE, QNA_CONTENT, QNA_STATUS, USER_ID)
+		VALUSE(qna_seq.NEXTVAL, #{qnaTitle}, #{qnaContent}, #{qnaStatus}, #{userId} )
+	</insert>
+</mapper>
+
+
+
+
+
+
+
+
+
+
+
+
