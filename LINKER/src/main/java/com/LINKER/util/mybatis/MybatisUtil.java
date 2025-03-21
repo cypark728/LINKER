@@ -25,8 +25,9 @@ public class MybatisUtil {
 			System.out.println("세션팩토리 생성됨");
 			
 		} catch (Exception e) {
-			e.printStackTrace();
 			System.out.println("세션팩토리 오류");
+			System.out.println(sqlSessionFactory);
+			e.printStackTrace();
 		}
 		
 	}

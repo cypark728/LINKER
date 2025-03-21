@@ -12,12 +12,14 @@ public class ProductDetailDTO {
 	public String productType;
 	public int userId;
 	public String productStaus;
+	public String productName;
 	
 	public ProductDetailDTO() {
 	}
 
 	public ProductDetailDTO(int productDetailId, byte[] productImage, String productDescription,
-			Timestamp productCreatedAt, int productPrice, String productType, int userId, String productStaus) {
+			Timestamp productCreatedAt, int productPrice, String productType, int userId, String productStaus,
+			String productName) {
 		super();
 		this.productDetailId = productDetailId;
 		this.productImage = productImage;
@@ -27,6 +29,7 @@ public class ProductDetailDTO {
 		this.productType = productType;
 		this.userId = userId;
 		this.productStaus = productStaus;
+		this.productName = productName;
 	}
 
 	public int getProductDetailId() {
@@ -93,5 +96,16 @@ public class ProductDetailDTO {
 		this.productStaus = productStaus;
 	}
 
+	public String getProductName() {
+		return productName;
+	}
+
+	public void setProductName(String productName) {
+		this.productName = productName;
+	}
+
+	
+
+	
 	
 }

@@ -3,7 +3,7 @@
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <!-- namespace에는 구현인터페이스의 풀패키지명을 포함한 이름 -->
-<mapper namespace="com.LINKER.qna.model.QnaMapper">
+<mapper namespace="com.LINKER.qna.model.IntegratedWriting">
 	
 	<!-- 
 		id는 인터페이스의 함수명 
@@ -20,13 +20,13 @@
 		파라미터의 이름은 getter명을 따라갑니다.
 	-->
 	<insert id="writeProductDetail" parameterType="com.LINKER.productDetail.model.ProductDetailDTO">
-		INSERT INTO PRODUCT_DETAIL (PRODUCT_DETAIL_ID, PRODUCT_IMAGE, PRODUCT_DESCRIPTION, PRODUCT_PRICE, PRODUCT_TYPE, USER_ID, PRODUCT STATUS) 
-		VALUES(product_detail_seq.NEXTVAL, #{productImage}, #{productDescription}, #{productPrice}, #{productType}, #{userId}, #{productStatus})
+		INSERT INTO PRODUCT_DETAIL (PRODUCT_DETAIL_ID, <!--PRODUCT_IMAGE,-->PRODUCT_DESCRIPTION, PRODUCT_TYPE, USER_ID, PRODUCT_NAME) 
+		VALUES(product_detail_seq.NEXTVAL, <!--#{productImage}, --> #{productDescription}, #{productType}, #{userId}, #{productName})
 	</insert>
 	
-	<insert id="writeQna" parameterType="QnaDTO">
-		INSERT INTO QNA (QNA_ID, QNA_TITLE, QNA_CONTENT, QNA_STATUS, USER_ID)
-		VALUSE(qna_seq.NEXTVAL, #{qnaTitle}, #{qnaContent}, #{qnaStatus}, #{userId} )
+	<insert id="writeQna" parameterType="com.LINKER.qna.model.QnaDTO">
+		INSERT INTO QNA (QNA_ID, QNA_TITLE, QNA_CONTENT, USER_ID)
+		VALUES(qna_seq.NEXTVAL, #{qnaTitle}, #{qnaContent}, #{userId} )
 	</insert>
 </mapper>
 

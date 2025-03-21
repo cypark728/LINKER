@@ -81,22 +81,38 @@ document.addEventListener('DOMContentLoaded', function () {
 		}
         // 제목과 내용이 모두 입력되었으면 등록 메시지
         else {
+			// 동적으로 폼 생성
+	        let form = document.createElement("form");
+	        form.method = "POST";
+	        //form.enctype = "multipart/form-data"; // 파일 업로드 가능하도록 설정
+			
+			// 제목 추가
+		    let titleInput = document.createElement("input");
+			titleInput.type = "hidden";
+		    titleInput.name = "title";
+		    titleInput.value = document.getElementById("title-input").value;
+		    form.appendChild(titleInput);
+						
+			// 내용 추가
+	        let contentInput = document.createElement("input");
+			contentInput.type = "hidden";
+	        contentInput.name = "content";
+	        contentInput.value = document.getElementById("content-input").value;
+	        form.appendChild(contentInput);
+			
 			// 상품등록 체크되었을 경우
 			if(productCheckbox.checked){
-				// 동적으로 폼 생성
-		        var form = document.createElement("form");
-		        form.method = "POST";
-		        form.action = "registerProduct.IntegratedWriting"; // 서블릿 주소
-		        form.enctype = "multipart/form-data"; // 파일 업로드 가능하도록 설정
+				form.action = "registerProduct.IntegratedWriting"; // 서블릿 주소
 				
 				// 카테고리 추가
-		        var categorySelect = document.createElement("input");
+		        let categorySelect = document.createElement("input");
+				categorySelect.type = "hidden";
 		        categorySelect.name = "category";
 		        categorySelect.value = document.getElementById("category-select").value;
 		        form.appendChild(categorySelect);
 			   
 				// 파일 추가
-		        var fileInput = document.getElementById("file-input");
+		        let fileInput = document.getElementById("file-input");
 		        if (fileInput.files.length > 0) {
 		            var file = fileInput.files[0];
 
@@ -107,33 +123,20 @@ document.addEventListener('DOMContentLoaded', function () {
 		            // 폼 데이터를 form에 추가
 		            for (var [key, value] of formData.entries()) {
 		                var fileHiddenInput = document.createElement("input");
+						fileHiddenInput.enctype = "multipart/form-data";
 		                fileHiddenInput.name = key;
 		                fileHiddenInput.value = value;
 		                form.appendChild(fileHiddenInput);
 		            }
 		        }
 			} else {
-				// 동적으로 폼 생성
-		        var form = document.createElement("form");
-		        form.method = "POST";
 		        form.action = "registerQna.IntegratedWriting"; // 서블릿 주소
 			}
-			// 제목 추가
-		    var titleInput = document.createElement("input");
-		    titleInput.name = "title";
-		    titleInput.value = document.getElementById("title-input").value;
-		    form.appendChild(titleInput);
-			
-			// 내용 추가
-	        var contentInput = document.createElement("input");
-	        contentInput.name = "content";
-	        contentInput.value = document.getElementById("content-input").value;
-	        form.appendChild(contentInput);
 			
 			// 동적으로 생성한 폼을 body에 추가 후 제출
 	        document.body.appendChild(form);
+			console.log(form);
 	        form.submit();
-			
 			//form에 세션에 저장되어있는(현재 로그인 중인) userid도 같이 전달해야 겠는데?
 			
             alert("작성한 글이 등록되었습니다");

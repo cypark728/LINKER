@@ -7,6 +7,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.LINKER.productDetail.service.ProductDetailService;
+import com.LINKER.productDetail.service.ProductDetailServiceImpl;
 import com.LINKER.qna.service.QnaService;
 import com.LINKER.qna.service.QnaServiceImpl;
 
@@ -38,17 +40,19 @@ public class IntegratedWritingController extends HttpServlet {
 		
 		System.out.println("요청경로: " + command);
 		
-		QnaService service = new QnaServiceImpl();
+		QnaService qnaService = new QnaServiceImpl();
+		ProductDetailService productDetailService = new ProductDetailServiceImpl();
 		
 		if(command.equals("/qna.IntegratedWriting")) {
 			request.getRequestDispatcher("main.jsp").forward(request, response);
 		} else if(command.equals("/registerQna.IntegratedWriting")) { //QnA 글쓰기
-			service.writeQna(request, response);
+			qnaService.writeQna(request, response);
 			
 		} else if(command.equals("/registerProduct.IntegratedWriting")) { //제품상세 글쓰기
-			
+			productDetailService.writeProductDetail(request, response);
 		}
 		
 	}
+
 
 }

@@ -25,7 +25,7 @@ public class QnaDAO {
 	private String upw = "LINKER";
 	
 	//QnA 글쓰기
-	public void writeQna(QnaDTO dto) {
+	public void writeQna1(QnaDTO dto) {
 		
 		Connection conn = null;
 		PreparedStatement pstmt = null;
