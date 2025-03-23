@@ -32,8 +32,8 @@ public class ProductDetailServiceImpl implements ProductDetailService{
 		SqlSession sql = sqlSessionFactory.openSession(true);
 		IntegratedWriting writing = sql.getMapper(IntegratedWriting.class);
 		
-		//userId 임시로 10 줬음. 고쳐야함!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-		ProductDetailDTO dto = new ProductDetailDTO(0, null, content, null, 0, category, 10, null, title);
+		//userId 임시로 0 줬음. 고쳐야함!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+		ProductDetailDTO dto = new ProductDetailDTO(0, null, content, null, 0, category, 0, null, title);
 		writing.writeProductDetail(dto);
 		sql.close();
 		

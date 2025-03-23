@@ -43,13 +43,18 @@ public class IntegratedWritingController extends HttpServlet {
 		QnaService qnaService = new QnaServiceImpl();
 		ProductDetailService productDetailService = new ProductDetailServiceImpl();
 		
-		if(command.equals("/qna.IntegratedWriting")) {
+		if(command.equals("/qna.IntegratedWriting")) { //QnA 리스트로 이동
+			request.getRequestDispatcher("qna_list.html").forward(request, response);
+		} else if(command.equals("/product.IntegratedWriting")) { //제품상세 글 쓰고 메인으로 이동.
 			request.getRequestDispatcher("main.jsp").forward(request, response);
 		} else if(command.equals("/registerQna.IntegratedWriting")) { //QnA 글쓰기
 			qnaService.writeQna(request, response);
-			
 		} else if(command.equals("/registerProduct.IntegratedWriting")) { //제품상세 글쓰기
 			productDetailService.writeProductDetail(request, response);
+		} else if(command.equals("/faq.IntegratedWriting")) { // 고객센터로 이동
+			request.getRequestDispatcher("faq.html").forward(request, response);
+		} else if(command.equals("/write.IntegratedWriting")) { //통합글쓰기로 이동
+			request.getRequestDispatcher("integratedWriting.jsp").forward(request, response);
 		}
 		
 	}

@@ -53,7 +53,7 @@
                             <li><a href="product_list.html">아크릴굿즈</a></li>
                             <li><a href="product_list wood.html">우드굿즈</a></li>
                             <li><a href="product_list_illust.html">일러스트굿즈</a></li>
-                            <li><a href="faq.html">고객센터</a></li>
+                            <li><a href="faq.IntegratedWriting">고객센터</a></li>
                         </ul>
                     </div>
                     <div class="header_tool">

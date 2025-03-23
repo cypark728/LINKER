@@ -5,3 +5,10 @@ $(document).ready(function () {
     });
 
 });
+
+var write = document.querySelector(".write");
+
+write.addEventListener("click", function() {
+	console.log("작동된거 맞아?");
+	location.href = 'registerQna.IntegratedWriting';
+});
