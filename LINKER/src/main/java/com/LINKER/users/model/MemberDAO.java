@@ -1,4 +1,4 @@
-package com.LINKER.member.model;
+package com.LINKER.users.model;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -24,7 +24,7 @@ public class MemberDAO {
 	private String upw = "LINKER";
 	
 	//로그인 기능 (이메일, 비밀번호 받으면 유저 정보 반환)
-	public MemberDTO login(String userEmail, String password) { 
+	public UsersDTO login(String userEmail, String password) { 
 		
 		Connection conn = null;
 		PreparedStatement pstmt = null;
@@ -33,7 +33,7 @@ public class MemberDAO {
 		String sql = "SELECT * FROM MEMBER WHERE EMAIL = ? AND PASSWORD = ?";
 		
 		//반환용 DTO
-		MemberDTO dto = null;
+		UsersDTO dto = null;
 		
 		try {
 			Class.forName("oracle.jdbc.driver.OracleDriver");
@@ -53,7 +53,7 @@ public class MemberDAO {
 				int cartId = rs.getInt("cart_id");
 				int userPoint = rs.getInt("user_point");
 				
-				dto = new MemberDTO(userId, userName, userEmail, password, phone, createdAt, memCode, cartId, userPoint);
+				dto = new UsersDTO(userId, userName, userEmail, password, phone, createdAt, memCode, cartId, userPoint);
 			}
 			
 		} catch (Exception e) {
@@ -72,7 +72,7 @@ public class MemberDAO {
 	}
 	
 	//회원가입 메서드
-	public void join(MemberDTO dto) {
+	public void join(UsersDTO dto) {
 		
 		Connection conn = null;
 		PreparedStatement pstmt = null;
@@ -145,7 +145,7 @@ public class MemberDAO {
 	}
 	
 	//회원 정보 수정
-	public int modify(MemberDTO dto) {
+	public int modify(UsersDTO dto) {
 		int result = 0;
 		Connection conn = null;
 		PreparedStatement pstmt = null;
@@ -209,9 +209,9 @@ public class MemberDAO {
 	}
 	
 	//모든 회원 목록 보기
-	public List<MemberDTO> getMemberList() {
+	public List<UsersDTO> getMemberList() {
 		//반환용 리스트
-        List<MemberDTO> memberList = new ArrayList<>();
+        List<UsersDTO> memberList = new ArrayList<>();
         
         Connection conn = null;
 		PreparedStatement pstmt = null;
@@ -230,7 +230,7 @@ public class MemberDAO {
 			
 			
 			while (rs.next()) {
-                MemberDTO dto = new MemberDTO();
+                UsersDTO dto = new UsersDTO();
                 dto.setUserId(rs.getInt("user_id"));
                 dto.setUserName(rs.getString("user_name"));
                 dto.setEmail(rs.getString("email"));

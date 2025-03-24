@@ -1,3 +1,5 @@
+<%@ page contentType="text/html; charset=UTF-8" language="java" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -32,7 +34,7 @@
                     <span class="pop_one pop_sign_in"><input type="submit" value="로그인"></span>
                 </div>
                 <div class="pop_sec_footer">
-                    <button class="pop_user"><strong><a class="su2" href="sign_up.html">회원가입</a></strong></button>
+                    <button class="pop_user"><strong><a class="su2" href="signUpPage.users">회원가입</a></strong></button>
                     <button class="pop_user"><strong>비밀번호 찾기</strong></button>
                 </div>
             </div>
@@ -42,21 +44,22 @@
         <header>
             <!-- <div id="header_wrap"> -->
             <div class="header_first_line">
-                <div class="logo_box">
+                <div class="logo_box" onclick="location.href='product.IntegratedWriting'">
                     <img src="img/logo.png" alt="logo">
                 </div>
                 <div class="header_top_menu">
                     <button class="sign_in">로그인</button>
-                    <button class="sign_up"><a class="su" href="sign_up.html">회원가입</a></button>
+                    <button class="sign_up"><a class="su" href="signUpPage.users">회원가입</a></button>
                 </div>
             </div>
             <div class="header_second_line">
+            
                 <div class="drop_down hd_drop">
                     <ul class="main_menu">
-                        <li><a href="product_list.html">아크릴굿즈</a></li>
-                        <li><a href="#">우드굿즈</a></li>
-                        <li><a href="#">일러스트굿즈</a></li>
-                        <li><a href="#">고객센터</a></li>
+                        <li><a href="acrylic.product">아크릴굿즈</a></li>
+                        <li><a href="wood.product">우드굿즈</a></li>
+                        <li><a href="illustration.product">일러스트굿즈</a></li>
+                        <li><a href="faq.IntegratedWriting">고객센터</a></li>
                     </ul>
                 </div>
                 <div class="header_tool hd_cart">
@@ -99,6 +102,14 @@
                     <td>2025-03-18</td>
                     <td>답변대기</td>
                 </tr>
+                <c:forEach var="dto" items="${list }">
+                <tr class="question">
+                    <td>${dto.qnaTitle}</td>
+                    <td>${dto.userId}</td>
+                    <td>${dto.qnaCreatedAt}</td>
+                    <td>${dto.qnaStatus}</td>
+                </tr>
+                </c:forEach>
             </table>
             <div class="pagination">
                 <a href="#"><span class="double-next" onclick="goToLastPage()"><img src="img/left_db_arrow.png" alt="#"></span></a>

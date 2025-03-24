@@ -1,8 +1,8 @@
-package com.LINKER.member.model;
+package com.LINKER.users.model;
 
 import java.sql.Timestamp;
 
-public class MemberDTO {
+public class UsersDTO {
 	private int userId;
 	private String userName;
 	private String email;
@@ -12,12 +12,13 @@ public class MemberDTO {
 	private String memCode;
 	private int cartId;
 	private int userPoint;
+	private String userAddress;
 	
-	public MemberDTO() {
+	public UsersDTO() {
 	}
 
-	public MemberDTO(int userId, String userName, String email, String password, String phone, Timestamp createdAt,
-			String memCode, int cartId, int userPoint) {
+	public UsersDTO(int userId, String userName, String email, String password, String phone, Timestamp createdAt,
+			String memCode, int cartId, int userPoint, String userAddress) {
 		super();
 		this.userId = userId;
 		this.userName = userName;
@@ -28,6 +29,7 @@ public class MemberDTO {
 		this.memCode = memCode;
 		this.cartId = cartId;
 		this.userPoint = userPoint;
+		this.userAddress = userAddress;
 	}
 
 	public int getUserId() {
@@ -101,6 +103,16 @@ public class MemberDTO {
 	public void setUserPoint(int userPoint) {
 		this.userPoint = userPoint;
 	}
+
+	public String getUserAddress() {
+		return userAddress;
+	}
+
+	public void setUserAddress(String userAddress) {
+		this.userAddress = userAddress;
+	}
+
+	
 
 	
 	

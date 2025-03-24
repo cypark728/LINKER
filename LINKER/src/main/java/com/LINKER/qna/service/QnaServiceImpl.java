@@ -1,6 +1,7 @@
 package com.LINKER.qna.service;
 
 import java.io.IOException;
+import java.util.ArrayList;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -34,5 +35,17 @@ public class QnaServiceImpl implements QnaService{
 		sql.close();
 		
 		response.sendRedirect("qna.IntegratedWriting");
+	}
+	
+	@Override
+	public void getQnaList(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+		
+		SqlSession sql = sqlSessionFactory.openSession(true);
+		IntegratedWriting writing = sql.getMapper(IntegratedWriting.class);
+		
+		ArrayList<QnaDTO> list = writing.getQnaList();
+		sql.close();
+		request.setAttribute("list", list);
 	}
 }

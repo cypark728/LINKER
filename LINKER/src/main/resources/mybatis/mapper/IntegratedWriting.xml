@@ -28,6 +28,10 @@
 		INSERT INTO QNA (QNA_ID, QNA_TITLE, QNA_CONTENT, USER_ID)
 		VALUES(qna_seq.NEXTVAL, #{qnaTitle}, #{qnaContent}, #{userId} )
 	</insert>
+	
+	<select id="getQnaList" resultType="com.LINKER.qna.model.QnaDTO">
+		SELECT * FROM QNA ORDER BY QNA_ID DESC
+	</select>
 </mapper>
 
 

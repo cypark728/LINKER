@@ -1,5 +1,7 @@
 package com.LINKER.qna.model;
 
+import java.util.ArrayList;
+
 import com.LINKER.productDetail.model.ProductDetailDTO;
 
 public interface IntegratedWriting {
@@ -8,6 +10,6 @@ public interface IntegratedWriting {
 	//마이바티스의 매개변수는 기본이 1개
 	int writeProductDetail(ProductDetailDTO dto);
 	int writeQna(QnaDTO dto);
-	
+	ArrayList<QnaDTO> getQnaList();
 	
 }
